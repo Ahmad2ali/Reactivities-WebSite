@@ -33,7 +33,7 @@ export default function NavBar(){
 
       </Box>
 
-           <Button  sx= {{color:"white"}}>
+           <Button  sx= {{color:"white", textTransform:'none'}}>
            User menu
            </Button>
             </Toolbar>
