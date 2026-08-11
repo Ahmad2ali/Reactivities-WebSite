@@ -7,13 +7,13 @@ using Application.Activities.Queries;
 using Application.Queries;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Differencing;
 namespace Api.Controllers;
 
 public class ActivitiesController : BaseApiController
-{
+{   
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {
@@ -21,7 +21,7 @@ public class ActivitiesController : BaseApiController
         return await Mediator.Send(new GetActivityList.Query());
 
     }
-
+      
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivityDetail(string id)
     {
