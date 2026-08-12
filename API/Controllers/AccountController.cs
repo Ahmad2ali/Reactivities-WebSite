@@ -57,7 +57,6 @@ namespace API.Controllers;
     }
 
     [HttpPost("logout")]
-
     public async Task<ActionResult> Logout()
     {
         await signInManager.SignOutAsync();
