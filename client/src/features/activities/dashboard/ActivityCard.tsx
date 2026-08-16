@@ -1,18 +1,25 @@
 import { AccessTime, Place } from "@mui/icons-material";
-import {Avatar,  Box,  Button,  Card,CardContent, CardHeader, Chip, Divider, Typography,} from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  Divider,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router";
 import { formatDate } from "../../../Lib/util/util";
+import AvatarPopover from "../../../app/shared/components/AvattarPopover";
 
 type Props = {
   activity: Activity;
 };
 
 export default function ActivityCard({ activity }: Props) {
-  const isHost = false;
-  const isGoing = false;
-  const label = isHost ? "You are hosting" : "You are going";
-  const isCancelled = false;
-  const color = isHost ? "Secondary" : isGoing ? "warning" : "default";
+  const label = activity.isHost ? "You are hosting" : "You are going";
 
   return (
     <Card elevation={3} sx={{ borderRadius: 3 }}>
@@ -32,7 +39,10 @@ export default function ActivityCard({ activity }: Props) {
           }}
           subheader={
             <>
-              Hosted by{""} <Link to={`/profiles/bob`}>Bob</Link>
+              Hosted by{" "}
+              <Link to={`/profiles/${activity.hostId}`}>
+                {activity.hostDisplayName}
+              </Link>
             </>
           }
         />
@@ -40,34 +50,61 @@ export default function ActivityCard({ activity }: Props) {
         <Box
           sx={{ display: "flex", flexDirection: "column", gap: 2, mr: 2 }}
         ></Box>
-        {(isHost || isGoing) && (
-          <Chip sx={{ label: { label }, color: { color }, borderRadius: 2 }} />
+
+
+
+        {(activity.isHost || activity.isGoing) && (
+          <Chip
+            label={label}
+            variant="outlined"
+            color={activity.isHost ? "secondary" : "warning"}
+            sx={{ borderRadius: 2 , gap: 2, mr: 2  }}
+          />
         )}
-        {isCancelled && <Chip sx={{ color: "error", borderRadius: 2 }} />}
+
+        {activity.isCncelled && (
+          <Chip
+          
+            label="Cancelled"
+            color="error"
+            sx={{ borderRadius: 2 }}
+          />
+        )}
       </Box>
 
       <Divider sx={{ mb: 3 }} />
 
       <CardContent sx={{ p: 3 }}>
         <Box sx={{ display: "flex", alignItems: "center", mb: 2, px: 2 }}>
-          <Box sx={{display:'flex', flexGrow:0, alignItems:'center'}}>
-                <AccessTime sx={{ mr: 1 }} />
-          <Typography variant="body2" noWrap>
-            {formatDate(activity.date)}
+          <Box sx={{ display: "flex", flexGrow: 0, alignItems: "center" }}>
+            <AccessTime sx={{ mr: 1 }} />
+
+            <Typography variant="body2" noWrap>
+              {formatDate(activity.date)}
             </Typography>
           </Box>
-       
+
           <Place sx={{ ml: 3, mr: 1 }} />
+
           <Typography variant="body2">{activity.venue}</Typography>
         </Box>
 
         <Divider />
+
         <Box
-          sx={{ display: "flex", backgroundColor: "grey.200", py: 3, pl: 3 }}
+          sx={{
+            display: "flex",
+            backgroundColor: "grey.200",
+            py: 3,
+            pl: 3,
+          }}
         >
-          Attendees go here
+          {activity.attendees.map((att) => (
+             <AvatarPopover profile={att} key={att.id}/>
+          ))}
         </Box>
       </CardContent>
+
       <CardContent sx={{ pb: 2 }}>
         <Typography variant="body2">{activity.description}</Typography>
 
@@ -76,7 +113,11 @@ export default function ActivityCard({ activity }: Props) {
           to={`/activities/${activity.id}`}
           size="medium"
           variant="contained"
-          sx={{ display: "flex", justifySelf: "self-end", borderRadius: 3 }}
+          sx={{
+            display: "flex",
+            justifySelf: "self-end",
+            borderRadius: 3,
+          }}
         >
           View
         </Button>
