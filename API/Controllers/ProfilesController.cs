@@ -18,7 +18,6 @@ public class ProfilesController : BaseApiController
     }
 
     [HttpGet("{userId}/photos")]
-
     public async Task<ActionResult<List<Photo>>> GetPhotosForUser(string userId)
     {
         return HandleResult(await Mediator.Send(new GetProfilePhotos.Query{UserId = userId}));
