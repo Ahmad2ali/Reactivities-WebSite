@@ -7,7 +7,7 @@ public class User : IdentityUser
      public string? DisplayName { get; set; }
      public string? Bio { get; set; }
 
-     public string? ImagUrl { get; set; }
+     public string? ImageUrl { get; set; }
 
      // navigation properties
 

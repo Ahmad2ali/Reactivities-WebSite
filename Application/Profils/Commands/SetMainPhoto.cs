@@ -24,7 +24,7 @@ public class SetMainPhoto
 
             if (photo == null) return Result<Unit>.Failure("Cannot find photo", 400);
 
-            user.ImagUrl = photo.Url;
+            user.ImageUrl = photo.Url;
 
             var result = await context.SaveChangesAsync(cancellationToken) > 0;
 

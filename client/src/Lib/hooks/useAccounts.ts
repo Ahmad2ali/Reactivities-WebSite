@@ -54,8 +54,6 @@ export const useAccount = () => {
             const response = await agent.get<User>('/account/user-info')
             return response.data;
         },
-
-        enabled: !queryClient.getQueryData(['user'])
     })
 
     return {

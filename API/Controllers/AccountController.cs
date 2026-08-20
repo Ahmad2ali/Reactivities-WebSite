@@ -52,7 +52,7 @@ namespace API.Controllers;
             user.DisplayName,
             user.Email,
             user.Id,
-            user.ImagUrl
+            user.ImageUrl
         });
     }
 

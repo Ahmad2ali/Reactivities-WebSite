@@ -32,7 +32,7 @@ public class AddPhoto
                 UserId = user.Id
             };
 
-            user.ImagUrl ??= photo.Url;
+            user.ImageUrl ??= photo.Url;
             context.Photos.Add(photo);
 
             var result = await context.SaveChangesAsync(cancellationToken) > 0;
