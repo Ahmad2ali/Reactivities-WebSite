@@ -14,7 +14,7 @@ export default function ProfilePage() {
   if(!profile) return <Typography>Profile not found</Typography>
   return (
    <Grid size={12}>
-     <ProfileHeader profile={profile}/>
+     <ProfileHeader />
      <ProfileContent/>
    </Grid>
   )
