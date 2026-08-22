@@ -15,20 +15,20 @@ import DeleteButton from "../../app/shared/components/DeleteButton";
 
 export default function ProfilePhotos() {
   const { id } = useParams();
-  const {
-    photos,
-    loadingPhotos,
-    isCurrentUser,
-    uploadePhoto,
-    profile,
-    setMianPhoto,
-    deletePhoto,
-  } = useProfile(id);
+const {
+  photos,
+  loadingPhotos,
+  isCurrentUser,
+  uploadPhoto,
+  profile,
+  setMainPhoto,
+  deletePhoto,
+} = useProfile(id);
 
   const [editMode, setEditMode] = useState(false);
 
   const handlePhotoUpload = (file: Blob) => {
-    uploadePhoto.mutate(file, {
+    uploadPhoto.mutate(file, {
       onSuccess: () => {
         setEditMode(false);
       },
@@ -53,7 +53,7 @@ export default function ProfilePhotos() {
       {editMode ? (
         <PhotoUploadWidget
           uploadPhoto={handlePhotoUpload}
-          loading={uploadePhoto.isPending}
+          loading={uploadPhoto.isPending}
         />
       ) : (
         <>
@@ -79,7 +79,7 @@ export default function ProfilePhotos() {
                     <div>
                       <Box
                         sx={{ position: "absolute", top: 0, left: 0 }}
-                        onClick={() => setMianPhoto.mutate(item)}
+                        onClick={() => setMainPhoto.mutate(item)}
                       >
                         <StarButton selected={item.url === profile?.imageUrl} />
                       </Box>

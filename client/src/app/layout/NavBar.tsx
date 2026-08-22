@@ -5,7 +5,7 @@ import {
   Toolbar,
   Typography,
   Container,
-  LinearProgress,
+  CircularProgress,
 } from "@mui/material";
 import { NavLink } from "react-router";
 import MenuItemLink from "../shared/components/MenuItemLink";
@@ -16,18 +16,15 @@ import UserMenue from "./UserMenue";
 
 export default function NavBar() {
   const { uiStore } = useStore();
-  const {currentUser} = useAccount();
-
-
+  const { currentUser } = useAccount();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="static"
+        position="fixed"
         sx={{
           backgroundImage:
             "linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)",
-            position:'relative'
         }}
       >
         <Container maxWidth="xl">
@@ -44,9 +41,25 @@ export default function NavBar() {
                 }}
               >
                 <Group fontSize="large" />
-                <Typography variant="h3" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h3" sx={{ fontWeight: "bold", position: 'relative' }}>
                   Reactivities
                 </Typography>
+                <Observer>
+                  {() =>
+                    uiStore.isLoading ? (
+                      <CircularProgress
+                        size={20}
+                        thickness={7}
+                        sx={{
+                        color: 'white',
+                        position: 'absolute',
+                        top: '30%',
+                        left: '105%'
+                        }}
+                      />
+                    ) : null
+                  }
+                </Observer>
               </Box>
             </Box>
 
@@ -56,37 +69,18 @@ export default function NavBar() {
               <MenuItemLink to="/errors">Errors</MenuItemLink>
             </Box>
 
-              <Box sx={{display: 'flex', alignItems:'center'}}>
-                  {currentUser ? (
-                        <UserMenue/>
-                  )  : (
-                    <>
-                   <MenuItemLink to="/login">Login</MenuItemLink>
-                   <MenuItemLink to="/register">Register</MenuItemLink>
-
-                    </>
-                  )}
-              </Box>
-
-
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              {currentUser ? (
+                <UserMenue />
+              ) : (
+                <>
+                  <MenuItemLink to="/login">Login</MenuItemLink>
+                  <MenuItemLink to="/register">Register</MenuItemLink>
+                </>
+              )}
+            </Box>
           </Toolbar>
         </Container>
-        <Observer>
-          {() =>
-            uiStore.isLoading ? (
-              <LinearProgress
-                color="secondary"
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 4,
-                }}
-              />
-            ) : null
-          }
-        </Observer>
       </AppBar>
     </Box>
   );
